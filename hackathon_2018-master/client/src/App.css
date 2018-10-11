@@ -1,0 +1,40 @@
+.Info-Card {
+    margin-top: 15px;
+}
+
+.Card-Buttons {
+    margin-right: 10px;
+    user-select: none;
+}
+
+.Blue-Button {
+    color: #007bff !important;
+    opacity: 1.0;
+}
+
+.Blue-Button:active {
+    color: #007bff !important;
+    opacity: 1.0;
+}
+
+.Red-Button {
+    color: #dc3545 !important;
+    opacity: 1.0;
+}
+
+.card-header {
+    padding: .45rem 1.25rem;
+}
+
+.card-footer {
+    padding: .45rem 1.25rem;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.badge {
+    margin-right: 5px;
+    padding-bottom: 4px;
+}
