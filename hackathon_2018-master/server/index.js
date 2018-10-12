@@ -17,7 +17,7 @@ const cards = {
         payload: {
             intent: "top-funds-by-sector",
             title: "Top Funds in Energy Sector",
-            tags: ["energy"],
+            tags: ["Energy"],
             type: "suggestion",
             response: [
                 {
@@ -40,12 +40,12 @@ const cards = {
         date_time: 1539257435,
         payload: {
             intent: "book-meeting",
-            title: "Shall I go ahead and book a meeting with Markle, John on Oct 21st at 10 am",
-            tags: ["Book-meeting Action"],
+            title: "Outlook Confirmation",
+            tags: ["Meeting"],
             type: "action",
             response: [
                 {
-                    "title": "Shall I go ahead and book a meeting with Markle, John on Oct 21st at 10 am",
+                    "title": "Meeting booked with Sandeep for Thursday Oct 25 at 10 am.",
                     "details":"Confirm?",
                     "url": "https://msim.com"
                 }
@@ -59,6 +59,7 @@ const app = express();
 const port = 3001;
 
 var bodyParser = require("body-parser");
+//app.use(express.static,'./');
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -66,6 +67,7 @@ app.use(function(req, res, next) {
     next();
   });
 app.get('/example', (req, res) => res.send('Hello World!'))
+app.get('/index.html', (req, res) => res.sendFile(__dirname+'/index.html'));
 app.post('/handle', function(req,res){
 console.log(req.body);
     var intentName=req.body.intentName;
@@ -74,11 +76,15 @@ console.log(req.body);
 
     const response = cards[intentType];
     console.log(response);
+    if(response === null || typeof response === "undefined") {
+        res.sendStatus(200);
+        return;
+    }
     sockets.forEach((sock) => {
         if (sock.readyState === sock.OPEN) {
             sock.send(JSON.stringify(response));
          } 
     })
-    response.sendStatus(200);
+    res.sendStatus(200);
 });
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
